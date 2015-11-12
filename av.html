@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" type="text/css" href="av.css" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+        <script type="text/javascript" src="http://testldp.openinitiative.com/mystore.js"></script>
+        
+        <script id="item-template" type="text/x-handlebars-template">
+            <a onclick="store.render('#profiledetail', '{{"@id"}}', $('#detail-template').html())"><div>{{name}}: {{description}}</div></a>
+        </script>
+        <script id="detail-template" type="text/x-handlebars-template">
+            Salut {{object.name}} !
+        </script>
+        <script id="people-template" type="text/x-handlebars-template">
+            People:
+            <div id="people">
+                    {{#ldpeach object.ldp:contains "div"}}{{> item }}{{/ldpeach}}
+            </div>
+        </script>
+        
+        <script>
+            $(function(){
+                window.store = new MyStore({
+                    container: "http://localhost/wordpress/ldp_resource/",
+                    context: "http://owl.openinitiative.com/oicontext.jsonld",
+                    template: $("#people-template").html(),
+                    partials: {'item': $("#item-template").html(),'detail': $("#detail-template").html()}
+                });
+                store.render("#profilebrowser");
+            });
+        </script>
+    </head>
+    <body>
+        <div id="profilebrowsercontainer">
+            <div id="profiledetail"></div>
+            <div id="profilebrowser"></div>
+        </div>
+    </body>
+</html>

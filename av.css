@@ -1,0 +1,16 @@
+html, body, #profilebrowsercontainer {
+    height: 100%;
+    position: relative;
+}
+#profiledetail {
+    height: 80%;
+    border: solid 5px;
+    width: 60%;
+    float: left;
+}
+#profilebrowser {
+    height: 80%;
+    border: solid 5px;
+    width: 30%;
+    float: left;
+}
