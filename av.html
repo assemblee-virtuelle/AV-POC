@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Virtual-assembly proof of concept</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" type="text/css" href="av.css" />
         <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
         <script type="text/javascript" src="http://testldp.openinitiative.com/mystore.js"></script>
-        
+        <script type="text/javascript" src="config/config.js"></script>
+
         <script id="item-template" type="text/x-handlebars-template">
-            <a onclick="store.render('#profiledetail', '{{"@id"}}', $('#detail-template').html())"><div>{{name}}: {{description}}</div></a>
+            <a onclick="store.render('#profiledetail', '{{"@id"}}', $('#detail-template').html())">{{name}}: {{description}}</a>
         </script>
         <script id="detail-template" type="text/x-handlebars-template">
             Salut {{object.name}} !
@@ -18,12 +20,13 @@
                     {{#ldpeach object.ldp:contains "div"}}{{> item }}{{/ldpeach}}
             </div>
         </script>
-        
+
         <script>
             $(function(){
+                console.log(config);
                 window.store = new MyStore({
-                    container: "http://localhost/wordpress/ldp_resource/",
-                    context: "http://owl.openinitiative.com/oicontext.jsonld",
+                    container: config.containerUrl,
+                    context: config.contextUrl,
                     template: $("#people-template").html(),
                     partials: {'item': $("#item-template").html(),'detail': $("#detail-template").html()}
                 });
@@ -32,6 +35,10 @@
         </script>
     </head>
     <body>
+        <h1>Welcome on the Virtual-Assembly proof of concept website</h1>
+
+        <p>Here is the list of people present on the AV website</p>
+        <p>Please feel free to browse through everything else, by clinking the links</p>
         <div id="profilebrowsercontainer">
             <div id="profiledetail"></div>
             <div id="profilebrowser"></div>

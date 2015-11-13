@@ -2,15 +2,25 @@ html, body, #profilebrowsercontainer {
     height: 100%;
     position: relative;
 }
+
 #profiledetail {
+    display: inline-block;
+    border-radius: 10px;
     height: 80%;
-    border: solid 5px;
+    border: solid 2px;
     width: 60%;
-    float: left;
 }
+
 #profilebrowser {
+    display: inline-block;
+    border-radius: 10px;
     height: 80%;
-    border: solid 5px;
+    border: solid 2px grey;
     width: 30%;
-    float: left;
+}
+
+a {
+  text-decoration: none;
+  font-style: italic;
+  color: blue;
 }
