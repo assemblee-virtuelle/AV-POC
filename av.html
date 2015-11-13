@@ -15,7 +15,7 @@
             Salut {{object.name}} !
         </script>
         <script id="people-template" type="text/x-handlebars-template">
-            People:
+            <h2> List of people: </h2>
             <div id="people">
                     {{#ldpeach object.ldp:contains "div"}}{{> item }}{{/ldpeach}}
             </div>
@@ -23,7 +23,6 @@
 
         <script>
             $(function(){
-                console.log(config);
                 window.store = new MyStore({
                     container: config.containerUrl,
                     context: config.contextUrl,
