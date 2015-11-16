@@ -12,6 +12,13 @@ The code is mainly HTML and CSS. The templating parts are handled by Javascript 
 
 To install and use it, you will first need to get the Wordpress plugin mentioned above.
 
+## Architecture
+Based on what is assumed above (aka you also installed the Wordpress Plugin), the current POC architecture looks as the following:
+
+<p align="center">
+  <img src="https://github.com/assemblee-virtuelle/AV-POC/blob/master/wiki/img/AV-POC.png" alt="Architecture schema" />
+</p>
+
 ## Current state
 
 For now this interface is only displaying a list of People (simplified version of the Actors concept)
