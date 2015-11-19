@@ -8,39 +8,116 @@
         <script type="text/javascript" src="library/LDP-framework/mystore.js"></script>
         <script type="text/javascript" src="config/config.js"></script>
 
-        <script id="item-template" type="text/x-handlebars-template">
-            <a onclick="store.render('#profiledetail', '{{"@id"}}', $('#detail-template').html())">{{name}}: {{description}}</a>
-        </script>
-        <script id="detail-template" type="text/x-handlebars-template">
-            Salut {{object.name}} !
-        </script>
-        <script id="people-template" type="text/x-handlebars-template">
-            <h2> List of people: </h2>
-            <div id="people">
-                    {{#ldpeach object.ldp:contains "div"}}{{> item }}{{/ldpeach}}
+        <!--  ACTORS RELATED TEMPLATES -->
+        <script id="actor-item-template" type="text/x-handlebars-template">
+            <div>
+              <p>
+                <a onclick="displayActor('#detail', '{{"@id"}}', $('#actor-detail-template').html());">
+                  {{name}}
+                </a>
+              </p>
             </div>
         </script>
 
+        <script id="actor-detail-template" type="text/x-handlebars-template">
+            <div class="actor-detail-active">
+              <p>Nom: {{object.name}}</p>
+              <p>Qui suis-je ? {{object.description}}</p>
+              <!-- <script>
+                var project = actorStore.get(object.contributes_to);
+                object.contributes_to = project.name;
+              <{{!}}/script> -->
+              <p>
+                <a onclick="displayProject('#detail', '{{"@id"}}', $('#project-detail-template').html()))">
+                  Contribue a: {{object.contributes_to}}
+                </a>
+              </p>
+          </div>
+        </script>
+
+        <script id="actor-template" type="text/x-handlebars-template">
+            <h2>List of people:</h2>
+            <div id="actor">
+                {{#ldpeach object.ldp:contains "div"}}{{> actorItem }}{{/ldpeach}}
+            </div>
+        </script>
+
+        <!--  PROJECTS RELATED TEMPLATES -->
+        <script id="project-template" type="text/x-handlebars-template">
+            <h2>List of projects:</h2>
+            <div id="projects">
+                {{#ldpeach object.ldp:contains "div"}}{{> projectItem }}{{/ldpeach}}
+            </div>
+        </script>
+
+        <script id="project-item-template" type="text/x-handlebars-template">
+            <div>
+              <p>
+                <a onclick="displayProject('#detail', '{{"@id"}}', $('#project-detail-template').html())">
+                  {{project_title}}
+                </a>
+              </p>
+            </div>
+        </script>
+
+        <script id="project-detail-template" type="text/x-handlebars-template">
+            <div class="project-detail-active">
+              <p>Nom: {{object.project_title}}</p>
+              <p>Description du projet:<br> {{object.project_description}}</p>
+              <p>
+                <a onclick="displayActor('#detail', '{{"@id"}}', $('#actor-detail-template').html()))">
+                  Projet de l'initiative de : {{object.project_contributes}}
+                </a>
+              </p>
+          </div>
+        </script>
         <script>
             $(function(){
-                window.store = new MyStore({
-                    container: config.containerUrl,
+                window.actorStore = new MyStore({
+                    container: config.actorContainerUrl,
                     context: config.contextUrl,
-                    template: $("#people-template").html(),
-                    partials: {'item': $("#item-template").html(),'detail': $("#detail-template").html()}
+                    template: $("#actor-template").html(),
+                    partials: {
+                      'actorItem': $("#actor-item-template").html(),
+                      'actorDetail': $("#actor-detail-template").html()
+                    }
                 });
-                store.render("#profilebrowser");
+                actorStore.render("#actor-browser");
+
+                window.projectStore = new MyStore({
+                  container: config.projectContainerUrl,
+                  context: config.contextUrl,
+                  template: $("#project-template").html(),
+                  partials: {
+                    'projectItem': $("#project-item-template").html(),
+                    'projectDetail': $("#project-detail-template").html()
+                  }
+                });
+                projectStore.render("#project-browser");
             });
+
+            function displayProject(divName, itemId, innerHtml) {
+              projectStore.render(divName, itemId, innerHtml);
+            }
+
+            function displayActor(divName, itemId, innerHtml) {
+              actorStore.render(divName, itemId, innerHtml);
+              var actorObject = actorStore.get(itemId);
+              console.log(actorObject);
+            }
         </script>
     </head>
     <body>
         <h1>Welcome on the Virtual-Assembly proof of concept website</h1>
 
         <p>Here is the list of people present on the AV website</p>
-        <p>Please feel free to browse through everything else, by clinking the links</p>
-        <div id="profilebrowsercontainer">
-            <div id="profiledetail"></div>
-            <div id="profilebrowser"></div>
+        <p>Please feel free to browse through everything else, by clicking the links</p>
+        <div id="main-container">
+          <div id="detail"></div>
+            <div id="browser">
+              <div id="actor-browser"></div>
+              <div id="project-browser"></div>
+            </div>
         </div>
     </body>
 </html>

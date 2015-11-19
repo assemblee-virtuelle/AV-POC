@@ -1,10 +1,10 @@
-html, body, #profilebrowsercontainer {
+html, body, #main-container {
     height: 100%;
     position: relative;
     font-family: sans-serif;
 }
 
-#profiledetail {
+#detail {
     border-radius: 10px;
     height: 80%;
     border: solid 2px;
@@ -14,7 +14,7 @@ html, body, #profilebrowsercontainer {
     padding: 5px;
 }
 
-#profilebrowser {
+#actor-browser, #project-browser {
     border-radius: 10px;
     height: 80%;
     border: solid 2px grey;
@@ -24,7 +24,7 @@ html, body, #profilebrowsercontainer {
     padding: 5px;
 }
 
-#profilebrowser h2 {
+#actor-browser h2, #project-browser h2 {
   margin-top: 5px;
 }
 
