@@ -23,12 +23,8 @@
             <div class="actor-detail-active">
               <p>Nom: {{object.name}}</p>
               <p>Qui suis-je ? {{object.description}}</p>
-              <!-- <script>
-                var project = actorStore.get(object.contributes_to);
-                object.contributes_to = project.name;
-              <{{!}}/script> -->
               <p>
-                <a onclick="displayProject('#detail', '{{"@id"}}', $('#project-detail-template').html()))">
+                <a onclick="displayProject('#detail', '{{object.contributes_to}}', $('#project-detail-template').html());">
                   Contribue a: {{object.contributes_to}}
                 </a>
               </p>
@@ -65,7 +61,7 @@
               <p>Nom: {{object.project_title}}</p>
               <p>Description du projet:<br> {{object.project_description}}</p>
               <p>
-                <a onclick="displayActor('#detail', '{{"@id"}}', $('#actor-detail-template').html()))">
+                <a onclick="displayActor('#detail', '{{object.project_contributes}}', $('#actor-detail-template').html());">
                   Projet de l'initiative de : {{object.project_contributes}}
                 </a>
               </p>
