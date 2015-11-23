@@ -27,18 +27,20 @@
         <script id="actor-detail-template" type="text/x-handlebars-template">
             <div class="actor-detail-active">
               <h1 class="text-center text-uppercase">{{object.name}}</h1>
-              <h2>Description</h2>
-              <p>{{object.description}}</p>
-              <h2>Contribue a</h2>
-              <p>
-                <ul>
-                  <li>
-                    <a onclick="displayProject('#detail', '{{object.contributes_to}}', $('#project-detail-template').html());">
-                      {{object.contributes_to}}
-                    </a>
-                  </li>
-                </ul>
-              </p>
+              <div class="detail-content">
+                <h2>Description</h2>
+                <p>{{object.description}}</p>
+                <h2>Contribue a</h2>
+                <p>
+                  <ul>
+                    <li>
+                      <a onclick="displayProject('#detail', '{{object.contributes_to}}', $('#project-detail-template').html());">
+                        {{object.contributes_to}}
+                      </a>
+                    </li>
+                  </ul>
+                </p>
+              </div>
           </div>
         </script>
 
@@ -72,22 +74,24 @@
               <h1 class="text-center text-uppercase">
                 Le projet {{object.project_title}}
               </h1>
-              <h2>
-                Description du projet
-              </h2>
-              <p>
-                {{object.project_description}}
-              </p>
-              <h2>Projet de l'initiative de :</h2>
-              <p>
-                <ul>
-                  <li>
-                    <a onclick="displayActor('#detail', '{{object.project_contributes}}', $('#actor-detail-template').html());">
-                      {{object.project_contributes}}
-                    </a>
-                  </li>
-                </ul>
-              </p>
+              <div class="detail-content">
+                <h2>
+                  Description
+                </h2>
+                <p>
+                  {{object.project_description}}
+                </p>
+                <h2>Projet de l'initiative de :</h2>
+                <p>
+                  <ul>
+                    <li>
+                      <a onclick="displayActor('#detail', '{{object.project_contributes}}', $('#actor-detail-template').html());">
+                        {{object.project_contributes}}
+                      </a>
+                    </li>
+                  </ul>
+                </p>
+              </div>
           </div>
         </script>
         <script>

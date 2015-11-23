@@ -27,6 +27,10 @@ html, body, #main-container, #main-row {
   font-style: uppercase;
 }
 
+#detail .detail-content {
+  padding-left: 15px;
+}
+
 #actor-browser, #project-browser {
   height: 80%;
   border: solid 1px lightgrey;
@@ -38,10 +42,16 @@ html, body, #main-container, #main-row {
   background-color: black;
   color: white;
   line-height: 40px;
+  font-size: 26px;
+  padding-left: 10px;
 }
 
 a {
   cursor: pointer;
   text-decoration: none;
   color: black;
+}
+
+#browser a {
+  padding-left: 10px;
 }
