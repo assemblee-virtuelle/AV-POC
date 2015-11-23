@@ -95,6 +95,16 @@
           </div>
         </script>
         <script>
+            function displayProject(divName, itemId, innerHtml) {
+              projectStore.render(divName, itemId, innerHtml);
+            }
+
+            function displayActor(divName, itemId, innerHtml) {
+              actorStore.render(divName, itemId, innerHtml);
+              var actorObject = actorStore.get(itemId);
+              console.log(actorObject);
+            }
+
             $(function(){
                 window.actorStore = new MyStore({
                     container: config.containerUrl + 'actor/',
@@ -117,17 +127,10 @@
                   }
                 });
                 projectStore.render("#project-browser");
+                var cartopairId = config.resourceBaseUrl + 'project/cartopair/';
+                console.log(cartopairId);
+                displayProject('#detail', cartopairId, $('#project-detail-template').html());
             });
-
-            function displayProject(divName, itemId, innerHtml) {
-              projectStore.render(divName, itemId, innerHtml);
-            }
-
-            function displayActor(divName, itemId, innerHtml) {
-              actorStore.render(divName, itemId, innerHtml);
-              var actorObject = actorStore.get(itemId);
-              console.log(actorObject);
-            }
         </script>
     </head>
     <body>
@@ -136,19 +139,19 @@
         <div id="sidebar-wrapper">
           <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
             <li class="active">
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span></a>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span></a>
             </li>
             <li>
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span></a>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-search fa-stack-1x "></i></span></a>
             </li>
             <li>
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span></a>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-map-o fa-stack-1x "></i></span></a>
             </li>
             <li>
-                <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span></a>
+                <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-info-circle fa-stack-1x "></i></span></a>
             </li>
             <li>
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-youtube-play fa-stack-1x "></i></span></a>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-reply fa-stack-1x "></i></span></a>
             </li>
           </ul>
         </div>
@@ -158,8 +161,8 @@
                 <div id="detail"></div>
             </div>
             <div id="browser" class="col-md-3">
-                <div id="actor-browser" class="row"></div>
-                <div id="project-browser" class="row"></div>
+              <div id="project-browser" class="row"></div>
+              <div id="actor-browser" class="row"></div>
             </div>
           </div>
         </div>
