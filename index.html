@@ -3,10 +3,15 @@
     <head>
         <title>Virtual-assembly proof of concept</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link rel="stylesheet" type="text/css" href="av.css" />
+        <link href="library/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="resources/css/sidebar.css" rel="stylesheet">
+        <link href="library/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="resources/css/av.css" type="text/css" rel="stylesheet" />
         <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
         <script type="text/javascript" src="library/LDP-framework/mystore.js"></script>
         <script type="text/javascript" src="config/config.js"></script>
+        <script src="library/bootstrap/js/bootstrap.min.js"></script>
+        <script src="resources/js/sidebar.js"></script>
 
         <!--  ACTORS RELATED TEMPLATES -->
         <script id="actor-item-template" type="text/x-handlebars-template">
@@ -21,18 +26,24 @@
 
         <script id="actor-detail-template" type="text/x-handlebars-template">
             <div class="actor-detail-active">
-              <p>Nom: {{object.name}}</p>
-              <p>Qui suis-je ? {{object.description}}</p>
+              <h1 class="text-center text-uppercase">{{object.name}}</h1>
+              <h2>Description</h2>
+              <p>{{object.description}}</p>
+              <h2>Contribue a</h2>
               <p>
-                <a onclick="displayProject('#detail', '{{object.contributes_to}}', $('#project-detail-template').html());">
-                  Contribue a: {{object.contributes_to}}
-                </a>
+                <ul>
+                  <li>
+                    <a onclick="displayProject('#detail', '{{object.contributes_to}}', $('#project-detail-template').html());">
+                      {{object.contributes_to}}
+                    </a>
+                  </li>
+                </ul>
               </p>
           </div>
         </script>
 
         <script id="actor-template" type="text/x-handlebars-template">
-            <h2>List of people:</h2>
+            <h2 class="text-uppercase">People</h2>
             <div id="actor">
                 {{#ldpeach object.ldp:contains "div"}}{{> actorItem }}{{/ldpeach}}
             </div>
@@ -40,7 +51,7 @@
 
         <!--  PROJECTS RELATED TEMPLATES -->
         <script id="project-template" type="text/x-handlebars-template">
-            <h2>List of projects:</h2>
+            <h2 class="text-uppercase">projects</h2>
             <div id="projects">
                 {{#ldpeach object.ldp:contains "div"}}{{> projectItem }}{{/ldpeach}}
             </div>
@@ -58,19 +69,31 @@
 
         <script id="project-detail-template" type="text/x-handlebars-template">
             <div class="project-detail-active">
-              <p>Nom: {{object.project_title}}</p>
-              <p>Description du projet:<br> {{object.project_description}}</p>
+              <h1 class="text-center text-uppercase">
+                Le projet {{object.project_title}}
+              </h1>
+              <h2>
+                Description du projet
+              </h2>
               <p>
-                <a onclick="displayActor('#detail', '{{object.project_contributes}}', $('#actor-detail-template').html());">
-                  Projet de l'initiative de : {{object.project_contributes}}
-                </a>
+                {{object.project_description}}
+              </p>
+              <h2>Projet de l'initiative de :</h2>
+              <p>
+                <ul>
+                  <li>
+                    <a onclick="displayActor('#detail', '{{object.project_contributes}}', $('#actor-detail-template').html());">
+                      {{object.project_contributes}}
+                    </a>
+                  </li>
+                </ul>
               </p>
           </div>
         </script>
         <script>
             $(function(){
                 window.actorStore = new MyStore({
-                    container: config.actorContainerUrl,
+                    container: config.containerUrl + 'actor/',
                     context: config.contextUrl,
                     template: $("#actor-template").html(),
                     partials: {
@@ -81,7 +104,7 @@
                 actorStore.render("#actor-browser");
 
                 window.projectStore = new MyStore({
-                  container: config.projectContainerUrl,
+                  container: config.containerUrl + 'project/',
                   context: config.contextUrl,
                   template: $("#project-template").html(),
                   partials: {
@@ -104,16 +127,38 @@
         </script>
     </head>
     <body>
-        <h1>Welcome on the Virtual-Assembly proof of concept website</h1>
-
-        <p>Here is the list of people present on the AV website</p>
-        <p>Please feel free to browse through everything else, by clicking the links</p>
-        <div id="main-container">
-          <div id="detail"></div>
-            <div id="browser">
-              <div id="actor-browser"></div>
-              <div id="project-browser"></div>
-            </div>
+      <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+          <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+            <li class="active">
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span></a>
+            </li>
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span></a>
+            </li>
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span></a>
+            </li>
+            <li>
+                <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span></a>
+            </li>
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-youtube-play fa-stack-1x "></i></span></a>
+            </li>
+          </ul>
         </div>
+        <div id="content-wrapper">
+          <div id="main-container" class="container-fluid">
+            <div id="detail-wrapper" class="col-md-9">
+                <div id="detail"></div>
+            </div>
+            <div id="browser" class="col-md-3">
+                <div id="actor-browser" class="row"></div>
+                <div id="project-browser" class="row"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </body>
 </html>

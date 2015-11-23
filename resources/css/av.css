@@ -1,0 +1,47 @@
+html, body, #main-container, #main-row {
+  height: 100%;
+  position: relative;
+  font-family: sans-serif;
+}
+
+#content-wrapper {
+  height: 100%;
+}
+
+#detail-wrapper {
+  height: 100%;
+}
+
+#detail {
+  border: solid 1px;
+  height: 100%;
+  padding: 0;
+}
+
+#detail h1 {
+  margin-top: 0;
+  background-color: black;
+  color: white;
+  line-height: 80px;
+  text-align: center;
+  font-style: uppercase;
+}
+
+#actor-browser, #project-browser {
+  height: 80%;
+  border: solid 1px lightgrey;
+  margin-bottom: 15px;
+}
+
+#browser h2 {
+  margin-top: 0;
+  background-color: black;
+  color: white;
+  line-height: 40px;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
