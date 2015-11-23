@@ -52,6 +52,11 @@ a {
   color: black;
 }
 
-#browser a {
+#browser ul li a {
   padding-left: 10px;
+}
+
+#browser ul {
+  list-style: outside none none;
+  padding-left: 0;
 }
