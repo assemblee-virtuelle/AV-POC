@@ -8,10 +8,6 @@ html, body, #main-container, #main-row {
   height: 100%;
 }
 
-#detail-wrapper {
-  height: 100%;
-}
-
 #detail {
   height: 100%;
   padding: 0;
