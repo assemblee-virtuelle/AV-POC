@@ -5,6 +5,7 @@ html, body, #main-container, #main-row {
 }
 
 #content-wrapper {
+  background-color: lightgrey;
   height: 100%;
 }
 
@@ -25,12 +26,18 @@ html, body, #main-container, #main-row {
 #detail .detail-content {
   border: solid 1px;
   padding-left: 15px;
+  background-color: white;
 }
 
 #actor-browser, #project-browser {
   height: 80%;
   border: solid 1px lightgrey;
   margin-bottom: 15px;
+}
+
+#browser div {
+    background-color: white;
+    border-color: black;
 }
 
 #browser h2 {
