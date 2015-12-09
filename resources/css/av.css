@@ -29,6 +29,10 @@ html, body, #main-container, #main-row {
   background-color: white;
 }
 
+#detail .detail-content .personal-information {
+  padding-left: 15px;
+}
+
 #actor-browser, #project-browser {
   height: 80%;
   border: solid 1px lightgrey;
