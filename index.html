@@ -135,11 +135,43 @@
         </script>
         <script>
             function displayProject(divName, itemId, innerHtml) {
+              // refreshBrowsePanel(actorStore, itemId);
+              console.log('Rendering project ' + itemId);
               projectStore.render(divName, itemId, innerHtml);
+              window.location.hash = itemId;
             }
 
             function displayActor(divName, itemId, innerHtml) {
               actorStore.render(divName, itemId, innerHtml);
+              window.location.hash = itemId;
+            }
+
+            function refreshBrowsePanel(store, itemId) {
+              store.get(itemId).then(function(object) {
+                console.log(object);
+                console.log(object.project_contributes);
+                // store.container = object.project_contributes;
+                console.log(store);
+                store.render("#project-browser", object.project_contributes);
+              });
+            }
+
+            function displayResource(resourceIri) {
+              if (resourceIri.contains('/project/')) {
+                displayProject('#detail', resourceIri, $('#project-detail-template').html());
+              } else if (resourceIri.contains('/actor/')) {
+                displayActor('#detail', resourceIri, $('#actor-detail-template').html());
+              }
+            }
+
+            function refreshPageFromHash() {
+              var hash = window.location.hash;
+              if (hash) {
+                  displayResource(hash.substring(1, hash.length));
+              } else {
+                var cartopairId = config.resourceBaseUrl + 'project/assemblee-virtuelle/';
+                displayProject('#detail', cartopairId, $('#project-detail-template').html());
+              }
             }
 
             $(function(){
@@ -164,9 +196,11 @@
                   }
                 });
                 projectStore.render("#project-browser");
+                refreshPageFromHash();
+            });
 
-                var cartopairId = config.resourceBaseUrl + 'project/assemblee-virtuelle/';
-                displayProject('#detail', cartopairId, $('#project-detail-template').html());
+            $(window).on('hashchange', function() {
+              refreshPageFromHash();
             });
         </script>
     </head>
