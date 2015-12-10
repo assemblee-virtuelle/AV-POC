@@ -7,7 +7,7 @@
         <link href="resources/css/sidebar.css" rel="stylesheet">
         <link href="library/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href="resources/css/av.css" type="text/css" rel="stylesheet" />
-        <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+        <script type="text/javascript" src="library/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="library/LDP-framework/mystore.js"></script>
         <script type="text/javascript" src="config/config.js"></script>
         <script src="library/bootstrap/js/bootstrap.min.js"></script>
@@ -77,11 +77,26 @@
             </div>
         </script>
 
+        <script id="actor-browser-template" type="text/x-handlebars-template">
+            <h2 class="text-uppercase">People</h2>
+            <div id="actor">
+                {{#ldpeach object "ul"}}{{> actorItem }}{{/ldpeach}}
+            </div>
+        </script>
+
         <!--  PROJECTS RELATED TEMPLATES -->
         <script id="project-template" type="text/x-handlebars-template">
             <h2 class="text-uppercase">projects</h2>
             <div id="projects">
               {{#ldpeach object.ldp:contains "ul"}}{{> projectItem }}{{/ldpeach}}
+            </div>
+        </script>
+
+        <!--  PROJECTS RELATED TEMPLATES -->
+        <script id="project-browser-template" type="text/x-handlebars-template">
+            <h2 class="text-uppercase">projects</h2>
+            <div id="projects">
+              {{#ldpeach object "ul"}}{{> projectItem }}{{/ldpeach}}
             </div>
         </script>
 
@@ -135,24 +150,47 @@
         </script>
         <script>
             function displayProject(divName, itemId, innerHtml) {
-              // refreshBrowsePanel(actorStore, itemId);
               console.log('Rendering project ' + itemId);
               projectStore.render(divName, itemId, innerHtml);
+              refreshActorBrowsePanel(actorStore, itemId);
               window.location.hash = itemId;
             }
 
             function displayActor(divName, itemId, innerHtml) {
               actorStore.render(divName, itemId, innerHtml);
+              refreshProjectBrowsePanel(projectStore, itemId);
               window.location.hash = itemId;
             }
 
-            function refreshBrowsePanel(store, itemId) {
+            function refreshActorBrowsePanel(store, itemId) {
               store.get(itemId).then(function(object) {
-                console.log(object);
-                console.log(object.project_contributes);
-                // store.container = object.project_contributes;
-                console.log(store);
-                store.render("#project-browser", object.project_contributes);
+                var contributor = [];
+                var index = 0;
+                for (var property in object) {
+                  if (object.hasOwnProperty(property)) {
+                    if (property.contains('project_contributes') && object[property]) {
+                      contributor[index] = {'@id': object[property]};
+                      index++;
+                    }
+                  }
+                }
+                store.renderFromArray("#actor-browser", contributor, "#actor-browser-template");
+              });
+            }
+
+            function refreshProjectBrowsePanel(store, itemId) {
+              store.get(itemId).then(function(object) {
+                var projects = [];
+                var index = 0;
+                for (var property in object) {
+                  if (object.hasOwnProperty(property)) {
+                    if (property.contains('contributes_to') && object[property]) {
+                      projects[index] = {'@id': object[property]};
+                      index++;
+                    }
+                  }
+                }
+                store.renderFromArray("#project-browser", projects, "#project-browser-template");
               });
             }
 
@@ -184,7 +222,6 @@
                       'actorDetail': $("#actor-detail-template").html()
                     }
                 });
-                actorStore.render("#actor-browser");
 
                 window.projectStore = new MyStore({
                   container: config.containerUrl + 'project/',
@@ -195,7 +232,6 @@
                     'projectDetail': $("#project-detail-template").html()
                   }
                 });
-                projectStore.render("#project-browser");
                 refreshPageFromHash();
             });
 
