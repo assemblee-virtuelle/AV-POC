@@ -131,30 +131,30 @@
         </script>
         <script>
             function displayProject(divName, itemId, innerHtml) {
-              projectStore.render(divName, itemId, innerHtml);
-              refreshActorBrowsePanel(actorStore, itemId);
+              store.render(divName, itemId, innerHtml);
+              refreshActorBrowsePanel(itemId);
               window.location.hash = itemId;
             }
 
             function displayActor(divName, itemId, innerHtml) {
-              actorStore.render(divName, itemId, innerHtml);
-              refreshProjectBrowsePanel(projectStore, itemId);
+              store.render(divName, itemId, innerHtml);
+              refreshProjectBrowsePanel(itemId);
               window.location.hash = itemId;
             }
 
-            function refreshActorBrowsePanel(store, itemId) {
+            function refreshActorBrowsePanel(itemId) {
               store.get(itemId).then(function(object) {
-                renderFromPropertyName(store, "#actor-browser", object, "#actor-browser-template", 'project_contributes');
+                renderFromPropertyName("#actor-browser", object, "#actor-browser-template", 'project_contributes');
               });
             }
 
-            function refreshProjectBrowsePanel(store, itemId) {
+            function refreshProjectBrowsePanel(itemId) {
               store.get(itemId).then(function(object) {
-                renderFromPropertyName(store, "#project-browser", object, "#project-browser-template", 'contributes_to');
+                renderFromPropertyName("#project-browser", object, "#project-browser-template", 'contributes_to');
               });
             }
 
-            function renderFromPropertyName(store, divName, object, templateName, propertyName) {
+            function renderFromPropertyName(divName, object, templateName, propertyName) {
               var resourcesArray = [];
               var index = 0;
               for (var property in object) {
@@ -187,24 +187,16 @@
             }
 
             $(function(){
-                window.actorStore = new MyStore({
+                window.store = new MyStore({
                     container: config.containerUrl + 'actor/',
                     context: config.contextUrl,
                     template: $("#actor-template").html(),
                     partials: {
                       'actorItem': $("#actor-item-template").html(),
-                      'actorDetail': $("#actor-detail-template").html()
+                      'actorDetail': $("#actor-detail-template").html(),
+                      'projectItem': $("#project-item-template").html(),
+                      'projectDetail': $("#project-detail-template").html()
                     }
-                });
-
-                window.projectStore = new MyStore({
-                  container: config.containerUrl + 'project/',
-                  context: config.contextUrl,
-                  template: $("#project-template").html(),
-                  partials: {
-                    'projectItem': $("#project-item-template").html(),
-                    'projectDetail': $("#project-detail-template").html()
-                  }
                 });
                 refreshPageFromHash();
             });
