@@ -57,32 +57,40 @@
         </script>
 
         <script id="actor-template" type="text/x-handlebars-template">
-              <h2 class="text-uppercase">Acteurs associés</h2>
-              <div id="actor">
-                  {{#ldpeach object.ldp:contains "ul"}}{{> actorItem }}{{/ldpeach}}
-              </div>
+          <div class="browser-item">
+            <h2 class="text-uppercase">Acteurs associés</h2>
+            <div id="actor">
+                {{#ldpeach object.ldp:contains "ul"}}{{> actorItem }}{{/ldpeach}}
+            </div>
+          </div>
         </script>
 
         <script id="actor-browser-template" type="text/x-handlebars-template">
+          <div class="browser-item">
             <h2 class="text-uppercase">Acteurs associés</h2>
             <div id="actor">
                 {{#ldpeach object "ul"}}{{> actorItem }}{{/ldpeach}}
             </div>
+          </div>
         </script>
 
         <!--  PROJECTS RELATED TEMPLATES -->
         <script id="project-template" type="text/x-handlebars-template">
+          <div class="browser-item">
             <h2 class="text-uppercase">Projets associés</h2>
             <div id="projects">
               {{#ldpeach object.ldp:contains "ul"}}{{> projectItem }}{{/ldpeach}}
             </div>
+          </div>
         </script>
 
         <!--  PROJECTS RELATED TEMPLATES -->
         <script id="project-browser-template" type="text/x-handlebars-template">
-            <h2 class="text-uppercase">Projets associés</h2>
-            <div id="projects">
-              {{#ldpeach object "ul"}}{{> projectItem }}{{/ldpeach}}
+            <div class="browser-item">
+              <h2 class="text-uppercase">Projets associés</h2>
+              <div id="projects">
+                {{#ldpeach object "ul"}}{{> projectItem }}{{/ldpeach}}
+              </div>
             </div>
         </script>
 
@@ -136,14 +144,28 @@
 
             function refreshActorBrowsePanel(store, itemId) {
               store.get(itemId).then(function(object) {
-                store.renderFromArray("#actor-browser", object, "#actor-browser-template", 'project_contributes');
+                renderFromPropertyName(store, "#actor-browser", object, "#actor-browser-template", 'project_contributes');
               });
             }
 
             function refreshProjectBrowsePanel(store, itemId) {
               store.get(itemId).then(function(object) {
-                store.renderFromArray("#project-browser", object, "#project-browser-template", 'contributes_to');
+                renderFromPropertyName(store, "#project-browser", object, "#project-browser-template", 'contributes_to');
               });
+            }
+
+            function renderFromPropertyName(store, divName, object, templateName, propertyName) {
+              var resourcesArray = [];
+              var index = 0;
+              for (var property in object) {
+                if (object.hasOwnProperty(property)) {
+                  if (property.contains(propertyName) && object[property]) {
+                    resourcesArray[index] = {'@id': object[property]};
+                    index++;
+                  }
+                }
+              }
+              store.renderFromArray(divName, resourcesArray, templateName);
             }
 
             function displayResource(resourceIri) {

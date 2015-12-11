@@ -33,15 +33,11 @@ html, body, #main-container, #main-row {
   padding-left: 15px;
 }
 
-#actor-browser, #project-browser {
+.browser-item {
   height: 80%;
-  border: solid 1px lightgrey;
+  background-color: white;
+  border: solid 1px black;
   margin-bottom: 15px;
-}
-
-#browser div {
-    background-color: white;
-    border-color: black;
 }
 
 #browser h2 {
