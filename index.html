@@ -133,7 +133,7 @@
             function displayProject(divName, itemId, innerHtml) {
               store.render(divName, itemId, innerHtml);
               refreshBrowsePanel(itemId, 'actor', 'project_contributes');
-              // refreshProjectBrowsePanel(itemId, 'project', 'contributes_to');
+              refreshBrowsePanel(itemId, 'project', 'related_to');
               window.location.hash = itemId;
             }
 
