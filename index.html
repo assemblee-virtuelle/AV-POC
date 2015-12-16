@@ -132,19 +132,26 @@
         <script>
             function displayProject(divName, itemId, innerHtml) {
               store.render(divName, itemId, innerHtml);
-              refreshActorBrowsePanel(itemId);
+              refreshBrowsePanel(itemId, 'actor', 'project_contributes');
+              // refreshProjectBrowsePanel(itemId, 'project', 'contributes_to');
               window.location.hash = itemId;
             }
 
             function displayActor(divName, itemId, innerHtml) {
               store.render(divName, itemId, innerHtml);
-              refreshProjectBrowsePanel(itemId);
+              refreshBrowsePanel(itemId, 'project', 'contributes_to');
+              refreshBrowsePanel(itemId, 'actor', 'knows');
               window.location.hash = itemId;
             }
 
-            function refreshActorBrowsePanel(itemId) {
+            function refreshBrowsePanel(itemId, templatePrefix, propertyName) {
               store.get(itemId).then(function(object) {
-                renderFromPropertyName("#actor-browser", object, "#actor-browser-template", 'project_contributes');
+                renderFromPropertyName(
+                  "#" + templatePrefix + "-browser",
+                  object,
+                  "#" + templatePrefix + "-browser-template",
+                  propertyName
+                );
               });
             }
 
