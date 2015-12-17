@@ -26,5 +26,5 @@ For now this interface is only displaying a list of People (simplified version o
 ## Nexts steps
 
 Two importants steps are to be taken.
-- Being able to display both Actors, Projects, Ideas and Resources based on their own ontology located on the AV website
-- Being able to browse data from two different LDP servers (big parts of this step will be covered in the Wordpress plugin project)
+- Add the fluidgraph library to be able to view the data in a graph
+- Add edit capabilities for data coming from a LDP compliant server (not a Wordpress one).
