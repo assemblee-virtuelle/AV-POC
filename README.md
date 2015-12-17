@@ -27,4 +27,4 @@ For now this interface is only displaying a list of People (simplified version o
 
 Two importants steps are to be taken.
 - Add the fluidgraph library to be able to view the data in a graph
-- Add edit capabilities for data coming from a LDP compliant server (not a Wordpress one).
+- Add edit capabilities for data coming from a LDP compliant server (not a WP-LDP one).
