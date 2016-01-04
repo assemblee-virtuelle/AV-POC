@@ -1,3 +1,12 @@
+#####################################
+#### Contains() polyfill method #####
+#####################################
+if (!String.prototype.contains) {
+    String.prototype.contains = function(s) {
+        return this.indexOf(s) > -1
+    }
+}
+
 $("#menu-toggle").click(function(e) {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
