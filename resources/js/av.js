@@ -1,6 +1,6 @@
-#####################################
-#### Contains() polyfill method #####
-#####################################
+////////////////////////////////////
+//// Contains() polyfill method ///
+///////////////////////////////////
 if (!String.prototype.contains) {
     String.prototype.contains = function(s) {
         return this.indexOf(s) > -1
