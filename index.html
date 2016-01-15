@@ -10,6 +10,7 @@
         <script type="text/javascript" src="library/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="library/LDP-framework/mystore.js"></script>
         <script type="text/javascript" src="config/config.js"></script>
+        <script type="text/javascript" src="config/models.js"></script>
         <script src="library/bootstrap/js/bootstrap.min.js"></script>
         <script src="resources/js/av.js"></script>
 
@@ -53,6 +54,12 @@
                   </div>
                 </div>
               </div>
+              <div id="ldpform" style="display: none;">
+                {{{form 'actor' }}}
+              </div>
+              <button onclick="javascript:createItem(this, 'actor')">
+                Create a new actor
+              </button>
           </div>
         </script>
 
@@ -155,12 +162,6 @@
               });
             }
 
-            function refreshProjectBrowsePanel(itemId) {
-              store.get(itemId).then(function(object) {
-                renderFromPropertyName("#project-browser", object, "#project-browser-template", 'contributes_to');
-              });
-            }
-
             function renderFromPropertyName(divName, object, templateName, propertyName) {
               var resourcesArray = [];
               var index = 0;
@@ -173,6 +174,24 @@
                 }
               }
               store.renderFromArray(divName, resourcesArray, templateName);
+            }
+
+            function createItem(button, modelName) {
+              var form = document.getElementById('ldpform');
+              console.log(button);
+              console.log(button.value);
+              console.log(button.text);
+              console.log(button.innerHtml);
+              console.log(button.label);
+              if (form.style.display != 'block') {
+                form.style.display = 'block';
+                button.value = 'Cancel';
+                button.innerHtml = 'Cancel';
+              } else {
+                form.style.display = 'none';
+                button.innerHtml = 'Create a new ' + modelName;
+                button.value = 'Create a new ' + modelName;
+              }
             }
 
             function displayResource(resourceIri) {
@@ -188,8 +207,8 @@
               if (hash) {
                   displayResource(hash.substring(1, hash.length));
               } else {
-                var cartopairId = config.resourceBaseUrl + 'project/assemblee-virtuelle/';
-                displayProject('#detail', cartopairId, $('#project-detail-template').html());
+                var cartopairId = config.resourceBaseUrl + 'actor/francis-morel/';
+                displayProject('#detail', cartopairId, $('#actor-detail-template').html());
               }
             }
 
@@ -203,7 +222,8 @@
                       'actorDetail': $("#actor-detail-template").html(),
                       'projectItem': $("#project-item-template").html(),
                       'projectDetail': $("#project-detail-template").html()
-                    }
+                    },
+                    models: models
                 });
                 refreshPageFromHash();
             });
