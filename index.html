@@ -14,126 +14,6 @@
         <script src="library/bootstrap/js/bootstrap.min.js"></script>
         <script src="resources/js/av.js"></script>
 
-        <!--  ACTORS RELATED TEMPLATES -->
-        <script id="actor-item-template" type="text/x-handlebars-template">
-          <li>
-            <a onclick="displayActor('#detail', '{{"@id"}}', $('#actor-detail-template').html());">
-              {{firstname}} {{name}}
-            </a>
-          </li>
-        </script>
-
-        <script id="actor-detail-template" type="text/x-handlebars-template">
-            <div class="actor-detail-active">
-              <h1 class="text-center text-uppercase">{{object.firstname}} {{object.name}}</h1>
-              <div class="detail-content">
-                <h2>Description</h2>
-                <p>{{object.description}}</p>
-
-                <div class="row personal-information">
-                  <h2>Informations personnelles</h2>
-                  <div class="col-md-3 equal profile-picture">
-                    <img height="200" width="200" src="{{object.profile_picture_url}}" alt="Photo de profil" />
-                  </div>
-                  <div class="col-md-9 equal information-content">
-                    <p>Date de naissance: {{object.birthdate}}</p>
-                    <p>Adresse: {{object.address}}, {{object.zipcode}} {{object.city}}</p>
-
-                    <p>Personal Website: {{object.website}}</p>
-                    <p>Contact: <a href="mail:{{object.email_address}}">{{object.email_address}}</a></p>
-
-                    <p>
-                      Reseaux sociaux:
-                      <ul>
-                        {{#if object.linkedin }}<li>Linkedin: <a href="{{object.linkedin}}">{{object.linkedin}}</a></li>{{/if}}
-                        {{#if object.twitter }}<li>Twitter:  <a href="{{object.twitter}}">{{object.twitter}}</a></li>{{/if}}
-                        {{#if object.github }}<li>Github:   <a href="{{object.github}}">{{object.github}}</a></li>{{/if}}
-                        {{#if object.facebook }}<li>Facebook: <a href="{{object.facebook}}">{{object.facebook}}</a></li>{{/if}}
-                      </ul>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <input type="button" onclick="javascript:createItem(this, 'actor')" value="Create a new actor" />
-              <div id="ldpform" style="display: none;">
-                {{{form 'actor' }}}
-              </div>
-          </div>
-        </script>
-
-        <script id="actor-template" type="text/x-handlebars-template">
-          <div class="browser-item">
-            <h2 class="text-uppercase">Acteurs associés</h2>
-            <div id="actor">
-                {{#ldpeach object.ldp:contains "ul"}}{{> actorItem }}{{/ldpeach}}
-            </div>
-          </div>
-        </script>
-
-        <script id="actor-browser-template" type="text/x-handlebars-template">
-          <div class="browser-item">
-            <h2 class="text-uppercase">Acteurs associés</h2>
-            <div id="actor">
-                {{#ldpeach object "ul"}}{{> actorItem }}{{/ldpeach}}
-            </div>
-          </div>
-        </script>
-
-        <!--  PROJECTS RELATED TEMPLATES -->
-        <script id="project-template" type="text/x-handlebars-template">
-          <div class="browser-item">
-            <h2 class="text-uppercase">Projets associés</h2>
-            <div id="projects">
-              {{#ldpeach object.ldp:contains "ul"}}{{> projectItem }}{{/ldpeach}}
-            </div>
-          </div>
-        </script>
-
-        <!--  PROJECTS RELATED TEMPLATES -->
-        <script id="project-browser-template" type="text/x-handlebars-template">
-            <div class="browser-item">
-              <h2 class="text-uppercase">Projets associés</h2>
-              <div id="projects">
-                {{#ldpeach object "ul"}}{{> projectItem }}{{/ldpeach}}
-              </div>
-            </div>
-        </script>
-
-        <script id="project-item-template" type="text/x-handlebars-template">
-          <li>
-            <a onclick="displayProject('#detail', '{{"@id"}}', $('#project-detail-template').html())">
-              {{project_title}}
-            </a>
-          </li>
-        </script>
-
-        <script id="project-detail-template" type="text/x-handlebars-template">
-            <div class="project-detail-active">
-              <h1 class="text-center text-uppercase">
-                Le projet {{object.project_title}}
-              </h1>
-              <div class="detail-content">
-                <h2>
-                  Description
-                </h2>
-                <p>
-                  {{object.project_description}}
-                </p>
-
-                <h2>Objectifs</h2>
-                <p>{{object.project_goal}}</p>
-
-                <h2>Vision</h2>
-                <p>{{object.project_vision}}</p>
-
-                <h2>Contexte</h2>
-                <p>{{object.project_context}}</p>
-
-                <h2>Missions</h2>
-                <p>{{object.project_missions}}</p>
-              </div>
-          </div>
-        </script>
         <script>
             function displayProject(divName, itemId, innerHtml) {
               store.render(divName, itemId, innerHtml);
@@ -154,7 +34,7 @@
                 renderFromPropertyName(
                   "#" + templatePrefix + "-browser",
                   object,
-                  "#" + templatePrefix + "-browser-template",
+                  'templates/' + templatePrefix + '/' + templatePrefix + '-browser.handlebars',
                   propertyName
                 );
               });
@@ -176,27 +56,20 @@
 
             function createItem(button, modelName) {
               var form = document.getElementById('ldpform');
-              console.log(button);
-              console.log(button.value);
-              console.log(button.text);
-              console.log(button.innerHtml);
-              console.log(button.label);
               if (form.style.display != 'block') {
                 form.style.display = 'block';
                 button.value = 'Cancel';
-                button.innerHtml = 'Cancel';
               } else {
                 form.style.display = 'none';
-                button.innerHtml = 'Create a new ' + modelName;
                 button.value = 'Create a new ' + modelName;
               }
             }
 
             function displayResource(resourceIri) {
               if (resourceIri.contains('/project/')) {
-                displayProject('#detail', resourceIri, $('#project-detail-template').html());
+                displayProject('#detail', resourceIri, 'templates/project/project-detail.handlebars');
               } else if (resourceIri.contains('/actor/')) {
-                displayActor('#detail', resourceIri, $('#actor-detail-template').html());
+                displayActor('#detail', resourceIri, 'templates/actor/actor-detail.handlebars');
               }
             }
 
@@ -206,7 +79,7 @@
                   displayResource(hash.substring(1, hash.length));
               } else {
                 var cartopairId = config.resourceBaseUrl + 'actor/francis-morel/';
-                displayProject('#detail', cartopairId, $('#actor-detail-template').html());
+                displayProject('#detail', cartopairId, 'templates/actor/actor-detail.handlebars');
               }
             }
 
@@ -214,12 +87,12 @@
                 window.store = new MyStore({
                     container: config.containerUrl + 'actor/',
                     context: config.contextUrl,
-                    template: $("#actor-template").html(),
+                    template: 'templates/actor/actor-detail.handlebars',
                     partials: {
-                      'actorItem': $("#actor-item-template").html(),
-                      'actorDetail': $("#actor-detail-template").html(),
-                      'projectItem': $("#project-item-template").html(),
-                      'projectDetail': $("#project-detail-template").html()
+                      'actorItem': 'templates/actor/actor-item.handlebars',
+                      'actorDetail': 'templates/actor/actor-detail.handlebars',
+                      'projectItem': 'templates/project/project-item.handlebars',
+                      'projectDetail': 'templates/project/project-detail.handlebars'
                     },
                     models: models
                 });
