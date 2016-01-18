@@ -59,8 +59,6 @@
               store.renderFromArray(divName, resourcesArray, templateName);
             }
 
-<<<<<<< HEAD
-=======
             function createItem(button, modelName) {
               var form = document.getElementById('ldpform');
               if (form.style.display != 'block') {
@@ -72,7 +70,6 @@
               }
             }
 
->>>>>>> f78687c... Adding the capability to load templates from distinct directories
             function displayResource(resourceIri) {
               if (resourceIri.contains('/project/')) {
                 displayProject('#detail', resourceIri, 'templates/project/project-detail.handlebars');
@@ -86,13 +83,8 @@
               if (hash) {
                   displayResource(hash.substring(1, hash.length));
               } else {
-<<<<<<< HEAD
-                var cartopairId = config.resourceBaseUrl + 'project/assemblee-virtuelle/';
-                displayProject('#detail', cartopairId, $('#project-detail-template').html());
-=======
                 var cartopairId = config.resourceBaseUrl + 'actor/francis-morel/';
                 displayProject('#detail', cartopairId, 'templates/actor/actor-detail.handlebars');
->>>>>>> f78687c... Adding the capability to load templates from distinct directories
               }
             }
 
@@ -102,20 +94,12 @@
                     context: config.contextUrl,
                     template: 'templates/actor/actor-detail.handlebars',
                     partials: {
-<<<<<<< HEAD
-                      'actorItem': $("#actor-item-template").html(),
-                      'actorDetail': $("#actor-detail-template").html(),
-                      'projectItem': $("#project-item-template").html(),
-                      'projectDetail': $("#project-detail-template").html()
-                    }
-=======
                       'actorItem': 'templates/actor/actor-item.handlebars',
                       'actorDetail': 'templates/actor/actor-detail.handlebars',
                       'projectItem': 'templates/project/project-item.handlebars',
                       'projectDetail': 'templates/project/project-detail.handlebars'
                     },
                     models: models
->>>>>>> f78687c... Adding the capability to load templates from distinct directories
                 });
                 refreshPageFromHash();
             });
