@@ -59,17 +59,6 @@
               store.renderFromArray(divName, resourcesArray, templateName);
             }
 
-            function createItem(button, modelName) {
-              var form = document.getElementById('ldpform');
-              if (form.style.display != 'block') {
-                form.style.display = 'block';
-                button.value = 'Cancel';
-              } else {
-                form.style.display = 'none';
-                button.value = 'Create a new ' + modelName;
-              }
-            }
-
             function displayResource(resourceIri) {
               if (resourceIri.contains('/project/')) {
                 displayProject('#detail', resourceIri, 'templates/project/project-detail.handlebars');
@@ -98,8 +87,7 @@
                       'actorDetail': 'templates/actor/actor-detail.handlebars',
                       'projectItem': 'templates/project/project-item.handlebars',
                       'projectDetail': 'templates/project/project-detail.handlebars'
-                    },
-                    models: models
+                    }
                 });
                 refreshPageFromHash();
             });
