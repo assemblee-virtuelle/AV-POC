@@ -1,5 +1,5 @@
 <div class="actor-detail-active">
-  <h1 class="text-center text-uppercase">{{object.firstname}} {{object.name}}</h1>
+  <h1 class="text-center text-uppercase">{{object.foaf:firstName}} {{object.foaf:name}}</h1>
   <div class="detail-content">
     <h2>Description</h2>
     <p>{{object.description}}</p>
@@ -13,8 +13,8 @@
         <p>Date de naissance: {{object.birthdate}}</p>
         <p>Adresse: {{object.address}}, {{object.zipcode}} {{object.city}}</p>
 
-        <p>Personal Website: {{object.website}}</p>
-        <p>Contact: <a href="mail:{{object.email_address}}">{{object.email_address}}</a></p>
+        <p>Personal Website: {{object.foaf:homePage}}</p>
+        <p>Contact: <a href="mailto:{{object.foaf:mbox}}">{{object.foaf:mbox}}</a></p>
 
         <p>
           Reseaux sociaux:
@@ -25,6 +25,7 @@
             {{#if object.facebook }}<li>Facebook: <a href="{{object.facebook}}">{{object.facebook}}</a></li>{{/if}}
           </ul>
         </p>
+
       </div>
     </div>
   </div>

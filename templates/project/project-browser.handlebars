@@ -1,6 +1,11 @@
 <div class="browser-item">
   <h2 class="text-uppercase">Projets associés</h2>
   <div id="projects">
-    {{#ldpeach object "ul"}}{{> projectItem }}{{/ldpeach}}
+    {{#if object.foaf:currentProject}}
+      {{#ldpeach object.foaf:currentProject "ul"}}{{> projectItem }}{{/ldpeach}}
+    {{/if}}
+    {{#if object.related}}
+      {{#ldpeach object.related "ul"}}{{> projectItem }}{{/ldpeach}}
+    {{/if}}
   </div>
 </div>
