@@ -14,49 +14,26 @@
         <script src="resources/js/av.js"></script>
 
         <script>
-            function displayProject(divName, itemId, innerHtml) {
-              store.render(divName, itemId, innerHtml);
-              refreshBrowsePanel(itemId, 'actor', 'project_contributes');
-              refreshBrowsePanel(itemId, 'project', 'related_to');
+            function displayProject(divName, itemId, templateName) {
+              store.render(divName, itemId, templateName);
+              refreshBrowsePanel(itemId, 'actor');
+              refreshBrowsePanel(itemId, 'project');
               window.location.hash = itemId;
             }
 
-            function displayActor(divName, itemId, innerHtml) {
-              store.render(divName, itemId, innerHtml);
-              refreshBrowsePanel(itemId, 'project', 'contributes_to');
-              refreshBrowsePanel(itemId, 'actor', 'knows');
+            function displayActor(divName, itemId, templateName) {
+              store.render(divName, itemId, templateName);
+              refreshBrowsePanel(itemId, 'project');
+              refreshBrowsePanel(itemId, 'actor');
               window.location.hash = itemId;
             }
 
-            function refreshBrowsePanel(itemId, templatePrefix, propertyName) {
-              store.get(itemId).then(function(object) {
-                renderFromPropertyName(
-                  "#" + templatePrefix + "-browser",
-                  object,
-                  'templates/' + templatePrefix + '/' + templatePrefix + '-browser.handlebars',
-                  propertyName
-                );
-              });
-            }
-
-            function refreshProjectBrowsePanel(itemId) {
-              store.get(itemId).then(function(object) {
-                renderFromPropertyName("#project-browser", object, "#project-browser-template", 'contributes_to');
-              });
-            }
-
-            function renderFromPropertyName(divName, object, templateName, propertyName) {
-              var resourcesArray = [];
-              var index = 0;
-              for (var property in object) {
-                if (object.hasOwnProperty(property)) {
-                  if (property.contains(propertyName) && object[property]) {
-                    resourcesArray[index] = {'@id': object[property]};
-                    index++;
-                  }
-                }
-              }
-              store.renderFromArray(divName, resourcesArray, templateName);
+            function refreshBrowsePanel(itemId, templatePrefix) {
+              store.render(
+                "#" + templatePrefix + "-browser",
+                itemId,
+                'templates/' + templatePrefix + '/' + templatePrefix + '-browser.handlebars'
+              );
             }
 
             function displayResource(resourceIri) {
@@ -72,8 +49,8 @@
               if (hash) {
                   displayResource(hash.substring(1, hash.length));
               } else {
-                var cartopairId = config.resourceBaseUrl + 'project/assemblee-virtuelle/';
-                displayProject('#detail', cartopairId, 'templates/project/project-detail.handlebars');
+                var resourceId = config.resourceBaseUrl + 'project/assemblee-virtuelle/';
+                displayProject('#detail', resourceId, 'templates/project/project-detail.handlebars');
               }
             }
 
