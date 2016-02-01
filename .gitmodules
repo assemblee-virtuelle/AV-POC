@@ -1,3 +1,6 @@
 [submodule "library/LDP-framework"]
 	path = library/LDP-framework
 	url = git@github.com:Open-Initiative/LDP-framework.git
+[submodule "library/rdfviewer"]
+	path = library/rdfviewer
+	url = https://github.com/jimmccusker/rdfviewer.git
