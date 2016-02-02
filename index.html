@@ -13,16 +13,26 @@
         <script src="library/bootstrap/js/bootstrap.min.js"></script>
         <script src="resources/js/av.js"></script>
 
+        <!-- Project templates -->
+        <script id="project-browser-template" type="text/x-handlebars-template" src="templates/project/project-browser.handlebars"></script>
+        <script id="project-detail-template" type="text/x-handlebars-template" src="templates/project/project-detail.handlebars"></script>
+        <script id="project-item-template" type="text/x-handlebars-template" src="templates/project/project-item.handlebars"></script>
+
+        <!-- Actor templates -->
+        <script id="actor-browser-template" type="text/x-handlebars-template" src="templates/actor/actor-browser.handlebars"></script>
+        <script id="actor-detail-template" type="text/x-handlebars-template" src="templates/actor/actor-detail.handlebars"></script>
+        <script id="actor-item-template" type="text/x-handlebars-template" src="templates/actor/actor-item.handlebars"></script>
+
         <script>
-            function displayProject(divName, itemId, templateName) {
-              store.render(divName, itemId, templateName);
+            function displayProject(divName, itemId, templateId) {
+              store.render(divName, itemId, templateId);
               refreshBrowsePanel(itemId, 'actor');
               refreshBrowsePanel(itemId, 'project');
               window.location.hash = itemId;
             }
 
-            function displayActor(divName, itemId, templateName) {
-              store.render(divName, itemId, templateName);
+            function displayActor(divName, itemId, templateId) {
+              store.render(divName, itemId, templateId);
               refreshBrowsePanel(itemId, 'project');
               refreshBrowsePanel(itemId, 'actor');
               window.location.hash = itemId;
@@ -32,15 +42,15 @@
               store.render(
                 "#" + templatePrefix + "-browser",
                 itemId,
-                'templates/' + templatePrefix + '/' + templatePrefix + '-browser.handlebars'
+                '#' + templatePrefix + '-browser-template'
               );
             }
 
             function displayResource(resourceIri) {
               if (resourceIri.contains('/project/')) {
-                displayProject('#detail', resourceIri, 'templates/project/project-detail.handlebars');
+                displayProject('#detail', resourceIri, '#project-detail-template');
               } else if (resourceIri.contains('/actor/')) {
-                displayActor('#detail', resourceIri, 'templates/actor/actor-detail.handlebars');
+                displayActor('#detail', resourceIri, '#actor-detail-template');
               }
             }
 
@@ -50,7 +60,7 @@
                   displayResource(hash.substring(1, hash.length));
               } else {
                 var resourceId = config.resourceBaseUrl + 'project/assemblee-virtuelle/';
-                displayProject('#detail', resourceId, 'templates/project/project-detail.handlebars');
+                displayProject('#detail', resourceId, '#project-detail-template');
               }
             }
 
@@ -60,10 +70,10 @@
                     context: config.contextUrl,
                     template: 'templates/actor/actor-detail.handlebars',
                     partials: {
-                      'actorItem': 'templates/actor/actor-item.handlebars',
-                      'actorDetail': 'templates/actor/actor-detail.handlebars',
-                      'projectItem': 'templates/project/project-item.handlebars',
-                      'projectDetail': 'templates/project/project-detail.handlebars'
+                      'actorItem': '#actor-item-template',
+                      'actorDetail': '#actor-detail-template',
+                      'projectItem': '#project-item-template',
+                      'projectDetail': '#project-detail-template'
                     }
                 });
                 refreshPageFromHash();
