@@ -21,7 +21,11 @@
         <!-- Actor templates -->
         <script id="actor-browser-template" type="text/x-handlebars-template" src="templates/actor/actor-browser.handlebars"></script>
         <script id="actor-detail-template" type="text/x-handlebars-template" src="templates/actor/actor-detail.handlebars"></script>
+        <script id="actor-posts-template" type="text/x-handlebars-template" src="templates/actor/actor-posts.handlebars"></script>
         <script id="actor-item-template" type="text/x-handlebars-template" src="templates/actor/actor-item.handlebars"></script>
+
+        <!-- Post templates -->
+        <script id="post-item-template" type="text/x-handlebars-template" src="templates/post/post-item.handlebars"></script>
 
         <script>
             function displayProject(divName, itemId, templateId) {
@@ -35,6 +39,22 @@
               store.render(divName, itemId, templateId);
               refreshBrowsePanel(itemId, 'project');
               refreshBrowsePanel(itemId, 'actor');
+              // store.get(itemId).then(function(object) {
+              //   var postsFeedUrl;
+              //   if (typeof object['foaf:weblog'] != 'undefined') {
+              //     postFeedUrl = object['foaf:weblog'] + '#me';
+              //   } else if (typeof object['foaf:accountName'] != 'undefined') {
+              //     postsFeedUrl = 'http://localhost/wordpress/author/' + object['foaf:accountName'] + '#me';
+              //   } else if (typeof object['foaf:nick'] != 'undefined') {
+              //     postsFeedUrl = 'http://localhost/wordpress/author/' + object['foaf:nick'] + '#me';
+              //   }
+              //   console.log('postsFeedUrl', postsFeedUrl);
+              //   store.get(postsFeedUrl).then(function(postObjects) {
+              //     console.log('postsFeed', JSON.stringify(postObjects));
+              //   });
+              //   // store.render('#posts', postsFeedUrl, '#actor-posts-template');
+              // });
+
               window.location.hash = itemId;
             }
 
@@ -73,7 +93,8 @@
                       'actorItem': '#actor-item-template',
                       'actorDetail': '#actor-detail-template',
                       'projectItem': '#project-item-template',
-                      'projectDetail': '#project-detail-template'
+                      'projectDetail': '#project-detail-template',
+                      'postItem': '#post-item-template'
                     }
                 });
                 refreshPageFromHash();

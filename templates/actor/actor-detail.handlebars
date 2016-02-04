@@ -20,13 +20,24 @@
           Reseaux sociaux:
           <ul>
             {{#if object.linkedin }}<li>Linkedin: <a href="{{object.linkedin}}">{{object.linkedin}}</a></li>{{/if}}
-            {{#if object.twitter }}<li>Twitter:  <a href="{{object.twitter}}">{{object.twitter}}</a></li>{{/if}}
-            {{#if object.github }}<li>Github:   <a href="{{object.github}}">{{object.github}}</a></li>{{/if}}
+            {{#if object.twitter }}<li>Twitter:   <a href="{{object.twitter}}">{{object.twitter}}</a></li>{{/if}}
+            {{#if object.github }}<li>Github:     <a href="{{object.github}}">{{object.github}}</a></li>{{/if}}
             {{#if object.facebook }}<li>Facebook: <a href="{{object.facebook}}">{{object.facebook}}</a></li>{{/if}}
           </ul>
         </p>
-
       </div>
     </div>
+
+    {{#if object.posts}}
+      <div class="row" id="author-posts">
+        <h2>Ses posts de blog</h2>
+
+        <div class="container">
+          {{#each object.posts}}
+            {{>postItem this}}
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
   </div>
 </div>
