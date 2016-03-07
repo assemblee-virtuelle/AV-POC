@@ -7,11 +7,15 @@
         <link href="resources/css/sidebar.css" rel="stylesheet">
         <link href="library/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href="resources/css/av.css" type="text/css" rel="stylesheet" />
+        <link href="library/rdfviewer/rdfviewer.css" type="text/css" rel="stylesheet" />
+
         <script type="text/javascript" src="library/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="library/LDP-framework/mystore.js"></script>
         <script type="text/javascript" src="config/config.js"></script>
-        <script src="library/bootstrap/js/bootstrap.min.js"></script>
-        <script src="resources/js/av.js"></script>
+        <script type="text/javascript" src="library/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="http://mbostock.github.com/d3/d3.v2.js"></script>
+        <script type="text/javascript" src="library/rdfviewer/rdf.js"></script>
+        <script type="text/javascript" src="resources/js/av.js"></script>
 
         <!-- Project templates -->
         <script id="project-browser-template" type="text/x-handlebars-template" src="templates/project/project-browser.handlebars"></script>
@@ -74,7 +78,7 @@
               }
             }
 
-            function refreshPageFromHash() {
+            function refreshCardFromHash() {
               var hash = window.location.hash;
               if (hash) {
                   displayResource(hash.substring(1, hash.length));
@@ -97,11 +101,11 @@
                       'postItem': '#post-item-template'
                     }
                 });
-                refreshPageFromHash();
+                refreshCardFromHash();
             });
 
             $(window).on('hashchange', function() {
-              refreshPageFromHash();
+              refreshCardFromHash();
             });
         </script>
     </head>
@@ -111,16 +115,16 @@
         <div id="sidebar-wrapper">
           <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
             <li class="active">
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span></a>
+                <a href="#" id="menu"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span></a>
             </li>
             <li>
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-search fa-stack-1x "></i></span></a>
+                <a href="#" id="graph"><span class="fa-stack fa-lg pull-left"><i class="fa fa-search fa-stack-1x "></i></span></a>
             </li>
             <li>
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-map-o fa-stack-1x "></i></span></a>
+                <a href="#" id="map"><span class="fa-stack fa-lg pull-left"><i class="fa fa-map-o fa-stack-1x "></i></span></a>
             </li>
             <li>
-                <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-info-circle fa-stack-1x "></i></span></a>
+                <a href="#" id="card"><span class="fa-stack fa-lg pull-left"><i class="fa fa-info-circle fa-stack-1x "></i></span></a>
             </li>
             <li>
                 <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-reply fa-stack-1x "></i></span></a>
@@ -136,6 +140,9 @@
               <div id="project-browser" class="row"></div>
               <div id="actor-browser" class="row"></div>
             </div>
+          </div>
+          <div id="graph-container" style="display: none;" height="1000px">
+            <svg id="chart" width="1000px" height="1000px"></svg>
           </div>
         </div>
       </div>

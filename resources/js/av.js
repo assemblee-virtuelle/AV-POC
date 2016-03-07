@@ -37,4 +37,39 @@ $('#menu li a').click(
   );
 }
 
-$(document).ready(function() {initMenu();});
+function loadGraphFromRdfViewer(){
+  //  var hash = window.location.hash;
+  //  var loadVal = hash.substring(1, hash.length);
+  // Temporary Hack
+   var loadVal = "http://benoit-alessandroni.fr/rdf/foaf.rdf";
+   console.log('loadVal', loadVal);
+    if (loadVal != null) {
+        loadVal = decodeURIComponent(loadVal);
+    }
+    viewrdf("#chart",1000,1000,loadVal,300);
+}
+
+function loadOnClickEvent() {
+  $('#card').click(function() {
+    $('#graph-container').hide("slow");
+    $('#main-container').show("slow");
+    $('#main-container').width("100%");
+    $('#main-container').height("100%");
+
+    refreshCardFromHash();
+
+  });
+
+  $('#graph').click(function() {
+    $('#main-container').hide("slow");
+    $('#graph-container').show("slow");
+    $('#graph-container').width("100%");
+    $('#graph-container').height("100%");
+    loadGraphFromRdfViewer();
+  });
+}
+
+$(document).ready(function() {
+  initMenu();
+  loadOnClickEvent();
+});
