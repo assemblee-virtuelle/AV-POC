@@ -7,6 +7,9 @@ if (!String.prototype.contains) {
     }
 }
 
+/********************************************
+************ NAVIGATION MENU HANDLING *******
+*********************************************/
 $("#menu-toggle").click(function(e) {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
@@ -35,6 +38,65 @@ $('#menu li a').click(
       }
     }
   );
+}
+
+/*********************************************
+**************** POC FUNCTIONS ***************
+**********************************************/
+function displayProject(divName, itemId, templateId) {
+  store.render(divName, itemId, templateId);
+  refreshBrowsePanel(itemId, 'actor');
+  refreshBrowsePanel(itemId, 'project');
+  window.location.hash = itemId;
+}
+
+function displayActor(divName, itemId, templateId) {
+  store.render(divName, itemId, templateId);
+  refreshBrowsePanel(itemId, 'project');
+  refreshBrowsePanel(itemId, 'actor');
+  // store.get(itemId).then(function(object) {
+  //   var postsFeedUrl;
+  //   if (typeof object['foaf:weblog'] != 'undefined') {
+  //     postFeedUrl = object['foaf:weblog'] + '#me';
+  //   } else if (typeof object['foaf:accountName'] != 'undefined') {
+  //     postsFeedUrl = 'http://localhost/wordpress/author/' + object['foaf:accountName'] + '#me';
+  //   } else if (typeof object['foaf:nick'] != 'undefined') {
+  //     postsFeedUrl = 'http://localhost/wordpress/author/' + object['foaf:nick'] + '#me';
+  //   }
+  //   console.log('postsFeedUrl', postsFeedUrl);
+  //   store.get(postsFeedUrl).then(function(postObjects) {
+  //     console.log('postsFeed', JSON.stringify(postObjects));
+  //   });
+  //   // store.render('#posts', postsFeedUrl, '#actor-posts-template');
+  // });
+
+  window.location.hash = itemId;
+}
+
+function refreshBrowsePanel(itemId, templatePrefix) {
+  store.render(
+    "#" + templatePrefix + "-browser",
+    itemId,
+    '#' + templatePrefix + '-browser-template'
+  );
+}
+
+function displayResource(resourceIri) {
+  if (resourceIri.contains('/project/')) {
+    displayProject('#detail', resourceIri, '#project-detail-template');
+  } else if (resourceIri.contains('/actor/')) {
+    displayActor('#detail', resourceIri, '#actor-detail-template');
+  }
+}
+
+function refreshCardFromHash() {
+  var hash = window.location.hash;
+  if (hash) {
+      displayResource(hash.substring(1, hash.length));
+  } else {
+    var resourceId = config.resourceBaseUrl + 'project/assemblee-virtuelle/';
+    displayProject('#detail', resourceId, '#project-detail-template');
+  }
 }
 
 function loadGraphFromRdfViewer(){
