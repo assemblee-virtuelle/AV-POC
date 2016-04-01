@@ -1,0 +1,35 @@
+body {
+  background-image: url("./../../resources/img/background.jpg");
+  background-attachment: scroll !important;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container-fluid {
+  height: 100%;
+}
+
+.row-fluid {
+  height: 50%;
+  width:100%;
+  display: table;
+  table-layout: fixed;
+}
+
+.row-fluid .col-md-3, .row-fluid .col-md-1, .row-fluid .col-md-2 {
+  /*height: 100%;
+  display: inline-block;
+  vertical-align: middle;*/
+  display: table-cell;
+  vertical-align: middle;
+  float: none;
+  text-align: center;
+}
+
+.row-fluid .col-md-3 .index-links {
+  background: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 30px;
+}
