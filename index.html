@@ -4,147 +4,67 @@
         <title>Virtual-assembly proof of concept</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link href="library/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="resources/css/sidebar.css" rel="stylesheet">
         <link href="library/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href="resources/css/av.css" type="text/css" rel="stylesheet" />
-        <link href="library/rdfviewer/rdfviewer.css" type="text/css" rel="stylesheet" />
+        <link href="resources/css/index.css" rel="stylesheet">
 
-        <script type="text/javascript" src="library/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="library/LDP-framework/mystore.js"></script>
-        <script type="text/javascript" src="config/config.js"></script>
-        <script type="text/javascript" src="library/bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="http://mbostock.github.com/d3/d3.v2.js"></script>
-        <script type="text/javascript" src="library/rdfviewer/rdf.js"></script>
         <script type="text/javascript" src="resources/js/av.js"></script>
 
-        <!-- Project templates -->
-        <script id="project-browser-template" type="text/x-handlebars-template" src="templates/project/project-browser.handlebars"></script>
-        <script id="project-detail-template" type="text/x-handlebars-template" src="templates/project/project-detail.handlebars"></script>
-        <script id="project-item-template" type="text/x-handlebars-template" src="templates/project/project-item.handlebars"></script>
-
-        <!-- Actor templates -->
-        <script id="actor-browser-template" type="text/x-handlebars-template" src="templates/actor/actor-browser.handlebars"></script>
-        <script id="actor-detail-template" type="text/x-handlebars-template" src="templates/actor/actor-detail.handlebars"></script>
-        <script id="actor-posts-template" type="text/x-handlebars-template" src="templates/actor/actor-posts.handlebars"></script>
-        <script id="actor-item-template" type="text/x-handlebars-template" src="templates/actor/actor-item.handlebars"></script>
-
-        <!-- Post templates -->
-        <script id="post-item-template" type="text/x-handlebars-template" src="templates/post/post-item.handlebars"></script>
-
-        <script>
-            function displayProject(divName, itemId, templateId) {
-              store.render(divName, itemId, templateId);
-              refreshBrowsePanel(itemId, 'actor');
-              refreshBrowsePanel(itemId, 'project');
-              window.location.hash = itemId;
-            }
-
-            function displayActor(divName, itemId, templateId) {
-              store.render(divName, itemId, templateId);
-              refreshBrowsePanel(itemId, 'project');
-              refreshBrowsePanel(itemId, 'actor');
-              // store.get(itemId).then(function(object) {
-              //   var postsFeedUrl;
-              //   if (typeof object['foaf:weblog'] != 'undefined') {
-              //     postFeedUrl = object['foaf:weblog'] + '#me';
-              //   } else if (typeof object['foaf:accountName'] != 'undefined') {
-              //     postsFeedUrl = 'http://localhost/wordpress/author/' + object['foaf:accountName'] + '#me';
-              //   } else if (typeof object['foaf:nick'] != 'undefined') {
-              //     postsFeedUrl = 'http://localhost/wordpress/author/' + object['foaf:nick'] + '#me';
-              //   }
-              //   console.log('postsFeedUrl', postsFeedUrl);
-              //   store.get(postsFeedUrl).then(function(postObjects) {
-              //     console.log('postsFeed', JSON.stringify(postObjects));
-              //   });
-              //   // store.render('#posts', postsFeedUrl, '#actor-posts-template');
-              // });
-
-              window.location.hash = itemId;
-            }
-
-            function refreshBrowsePanel(itemId, templatePrefix) {
-              store.render(
-                "#" + templatePrefix + "-browser",
-                itemId,
-                '#' + templatePrefix + '-browser-template'
-              );
-            }
-
-            function displayResource(resourceIri) {
-              if (resourceIri.contains('/project/')) {
-                displayProject('#detail', resourceIri, '#project-detail-template');
-              } else if (resourceIri.contains('/actor/')) {
-                displayActor('#detail', resourceIri, '#actor-detail-template');
-              }
-            }
-
-            function refreshCardFromHash() {
-              var hash = window.location.hash;
-              if (hash) {
-                  displayResource(hash.substring(1, hash.length));
-              } else {
-                var resourceId = config.resourceBaseUrl + 'project/assemblee-virtuelle/';
-                displayProject('#detail', resourceId, '#project-detail-template');
-              }
-            }
-
-            $(function(){
-                window.store = new MyStore({
-                    container: config.containerUrl + 'actor/',
-                    context: config.contextUrl,
-                    template: '#actor-detail-template',
-                    partials: {
-                      'actorItem': '#actor-item-template',
-                      'actorDetail': '#actor-detail-template',
-                      'projectItem': '#project-item-template',
-                      'projectDetail': '#project-detail-template',
-                      'postItem': '#post-item-template'
-                    }
-                });
-                refreshCardFromHash();
-            });
-
-            $(window).on('hashchange', function() {
-              refreshCardFromHash();
-            });
-        </script>
     </head>
+
     <body>
-      <div id="wrapper">
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-          <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-            <li class="active">
-                <a href="#" id="menu"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span></a>
-            </li>
-            <li>
-                <a href="#" id="graph"><span class="fa-stack fa-lg pull-left"><i class="fa fa-search fa-stack-1x "></i></span></a>
-            </li>
-            <li>
-                <a href="#" id="map"><span class="fa-stack fa-lg pull-left"><i class="fa fa-map-o fa-stack-1x "></i></span></a>
-            </li>
-            <li>
-                <a href="#" id="card"><span class="fa-stack fa-lg pull-left"><i class="fa fa-info-circle fa-stack-1x "></i></span></a>
-            </li>
-            <li>
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-reply fa-stack-1x "></i></span></a>
-            </li>
-          </ul>
+      <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="col-md-2 hidden-sm"></div>
+          <div class="col-md-3 col-sm-12 text-center">
+            <div class="index-links">
+              <a href="./projects.html">
+                <h1>
+                  <i class="fa fa-rocket"></i><br>
+                  Projects
+                </h1>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-1 hidden-sm"></div>
+          <div class="col-md-3 col-sm-12 text-center">
+            <div class="index-links">
+              <a href="./actors.html">
+                <h1>
+                  <i class="fa fa-users"></i><br>
+                  Actors
+                </h1>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-2 hidden-sm"></div>
         </div>
-        <div id="content-wrapper">
-          <div id="main-container" class="container-fluid">
-            <div id="detail-wrapper" class="col-md-9">
-                <div id="detail"></div>
-            </div>
-            <div id="browser" class="col-md-3">
-              <div id="project-browser" class="row"></div>
-              <div id="actor-browser" class="row"></div>
+        <div class="row-fluid">
+          <div class="col-md-2 hidden-sm"></div>
+          <div class="col-md-3 col-sm-12 text-center">
+            <div class="index-links">
+              <a href="./ideas.html">
+                <h1>
+                  <i class="glyphicon glyphicon-tag" /></i><br>
+                  ideas
+                </h1>
+              </a>
             </div>
           </div>
-          <div id="graph-container" style="display: none;" height="1000px">
-            <svg id="chart" width="1000px" height="1000px"></svg>
+          <div class="col-md-1 hidden-sm"></div>
+          <div class="col-md-3 col-sm-12 text-center">
+            <div class="index-links">
+              <a href="./resources.html">
+                <h1>
+                  <i class="glyphicon glyphicon-bitcoin" /></i><br>
+                  Ressources
+                </h1>
+              </a>
+            </div>
           </div>
+          <div class="col-md-2 hidden-sm"></div>
         </div>
       </div>
+
     </body>
 </html>

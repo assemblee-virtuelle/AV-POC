@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Virtual-assembly proof of concept</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href="library/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="resources/css/sidebar.css" rel="stylesheet">
+        <link href="library/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="resources/css/av.css" type="text/css" rel="stylesheet" />
+        <link href="library/rdfviewer/rdfviewer.css" type="text/css" rel="stylesheet" />
+
+        <script type="text/javascript" src="library/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="library/LDP-framework/mystore.js"></script>
+        <script type="text/javascript" src="config/config.js"></script>
+        <script type="text/javascript" src="library/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="http://mbostock.github.com/d3/d3.v2.js"></script>
+        <script type="text/javascript" src="library/rdfviewer/rdf.js"></script>
+        <script type="text/javascript" src="resources/js/av.js"></script>
+
+        <!-- Project templates -->
+        <script id="index-template" type="text/x-handlebars-template" src="templates/index.handlebars"></script>
+
+        <!-- Project templates -->
+        <script id="project-browser-template" type="text/x-handlebars-template" src="templates/project/project-browser.handlebars"></script>
+        <script id="project-detail-template" type="text/x-handlebars-template" src="templates/project/project-detail.handlebars"></script>
+        <script id="project-item-template" type="text/x-handlebars-template" src="templates/project/project-item.handlebars"></script>
+
+        <!-- Actor templates -->
+        <script id="actor-browser-template" type="text/x-handlebars-template" src="templates/actor/actor-browser.handlebars"></script>
+        <script id="actor-detail-template" type="text/x-handlebars-template" src="templates/actor/actor-detail.handlebars"></script>
+        <script id="actor-posts-template" type="text/x-handlebars-template" src="templates/actor/actor-posts.handlebars"></script>
+        <script id="actor-item-template" type="text/x-handlebars-template" src="templates/actor/actor-item.handlebars"></script>
+
+        <!-- Post templates -->
+        <script id="post-item-template" type="text/x-handlebars-template" src="templates/post/post-item.handlebars"></script>
+
+        <script>
+            $(function() {
+                window.store = new MyStore({
+                    container: config.containerUrl + 'actor/',
+                    context: config.contextUrl,
+                    template: '#actor-detail-template',
+                    partials: {
+                      'actorItem': '#actor-item-template',
+                      'actorDetail': '#actor-detail-template',
+                      'projectItem': '#project-item-template',
+                      'projectDetail': '#project-detail-template',
+                      'postItem': '#post-item-template'
+                    }
+                });
+                refreshCardFromHash();
+            });
+
+            $(window).on('hashchange', function() {
+              refreshCardFromHash();
+            });
+        </script>
+    </head>
+    <body>
+      <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+          <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+            <li class="active">
+                <a href="#" id="menu"><span class="fa-stack fa-lg pull-left"><i class="fa fa-bars fa-stack-1x "></i></span></a>
+            </li>
+            <li>
+                <a href="#" id="graph"><span class="fa-stack fa-lg pull-left"><i class="fa fa-search fa-stack-1x "></i></span></a>
+            </li>
+            <li>
+                <a href="#" id="map"><span class="fa-stack fa-lg pull-left"><i class="fa fa-map-o fa-stack-1x "></i></span></a>
+            </li>
+            <li>
+                <a href="#" id="card"><span class="fa-stack fa-lg pull-left"><i class="fa fa-info-circle fa-stack-1x "></i></span></a>
+            </li>
+            <li>
+                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-reply fa-stack-1x "></i></span></a>
+            </li>
+          </ul>
+        </div>
+        <div id="content-wrapper">
+          <div id="main-container" class="container-fluid">
+            <div id="detail-wrapper" class="col-md-9">
+                <div id="detail"></div>
+            </div>
+            <div id="browser" class="col-md-3">
+              <div id="project-browser" class="row"></div>
+              <div id="actor-browser" class="row"></div>
+            </div>
+          </div>
+          <div id="graph-container" style="display: none;" height="1000px">
+            <svg id="chart" width="1000px" height="1000px"></svg>
+          </div>
+        </div>
+      </div>
+    </body>
+</html>
