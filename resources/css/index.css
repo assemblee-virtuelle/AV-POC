@@ -33,3 +33,7 @@ body {
   border-radius: 5px;
   padding: 30px;
 }
+
+a {
+  text-align: center;
+}
