@@ -11,14 +11,12 @@
 
         <script type="text/javascript" src="library/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="library/LDP-framework/mystore.js"></script>
+        <script type="text/javascript" src="library/LDP-framework/node_modules/handlebars/dist/handlebars.js"></script>
         <script type="text/javascript" src="config/config.js"></script>
         <script type="text/javascript" src="library/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="http://mbostock.github.com/d3/d3.v2.js"></script>
         <script type="text/javascript" src="library/rdfviewer/rdf.js"></script>
         <script type="text/javascript" src="resources/js/av.js"></script>
-
-        <!-- Project templates -->
-        <script id="index-template" type="text/x-handlebars-template" src="templates/index.handlebars"></script>
 
         <!-- Project templates -->
         <script id="project-browser-template" type="text/x-handlebars-template" src="templates/project/project-browser.handlebars"></script>
@@ -34,26 +32,57 @@
         <!-- Post templates -->
         <script id="post-item-template" type="text/x-handlebars-template" src="templates/post/post-item.handlebars"></script>
 
+        <!-- Idea templates -->
+        <script id="idea-list-template" type="text/x-handlebars-template" src="templates/idea/idea-list.handlebars"></script>
+
         <script>
-            $(function() {
-                window.store = new MyStore({
-                    container: config.containerUrl + 'actor/',
-                    context: config.contextUrl,
-                    template: '#actor-detail-template',
-                    partials: {
-                      'actorItem': '#actor-item-template',
-                      'actorDetail': '#actor-detail-template',
-                      'projectItem': '#project-item-template',
-                      'projectDetail': '#project-detail-template',
-                      'postItem': '#post-item-template'
-                    }
-                });
-                refreshCardFromHash();
+          function getIdeasList() {
+            var hostNameList = getKnownHostsList();
+            var ideasList = [];
+
+            hostNameList.forEach(function (host) {
+              var url = host + '/ldp/idea/';
+              store.get(url).then(function(object) {
+                if (object['ldp:contains']) {
+                  $.each(object['ldp:contains'], function(index, idea) {
+                    store.get(idea).then(function(data) {
+                      console.log(data);
+                      var currentIdea = {
+                        'id':        data['@id'],
+                        'title':      data.title
+                      };
+                      ideasList.push(currentIdea);
+                      displayTemplate('#idea-list-template', '#detail', ideasList);
+                    });
+                  });
+                } else {
+                  displayTemplate('#idea-list-template', '#detail', undefined);
+                }
+              });
+            });
+          }
+
+          $(function() {
+            window.store = new MyStore({
+                container: config.containerUrl + 'actor/',
+                context: config.contextUrl,
+                template: '#actor-detail-template',
+                partials: {
+                  'actorItem': '#actor-item-template',
+                  'actorDetail': '#actor-detail-template',
+                  'projectItem': '#project-item-template',
+                  'projectDetail': '#project-detail-template',
+                  'postItem': '#post-item-template'
+                }
             });
 
-            $(window).on('hashchange', function() {
-              refreshCardFromHash();
-            });
+            getIdeasList();
+            // refreshCardFromHash();
+          });
+
+          $(window).on('hashchange', function() {
+            refreshCardFromHash();
+          });
         </script>
     </head>
     <body>
