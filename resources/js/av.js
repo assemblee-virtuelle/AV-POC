@@ -114,23 +114,12 @@ function getTemplateAjax(path, callback) {
 function displayTemplate(template, div, data) {
   if (typeof(template) == 'string' && template.substring(0, 1) == '#') {
     var element = $(template);
-    console.log('Element', element);
-    console.log('Element src', element.attr('src'));
     if (element && typeof element.attr('src') !== 'undefined') {
       getTemplateAjax(element.attr('src'), function(template) {
-        console.log(template);
-        $(div).html(template({object: data}));
+        $(div).html(template(data));
       });
     } else {
-      console.log('Going to else');
-      console.log('Data at this stage', data);
-      console.log('HTML element', element.html());
-      console.log(Handlebars);
       template = Handlebars.compile(element.html());
-      console.log('template', template);
-      var context = [{'project_title' : 'toto', 'project_description': 'test'}];
-      var test = template(context);
-      console.log(test);
       $(div).html(template(data));
     }
   } else {

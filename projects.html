@@ -32,31 +32,7 @@
         <script id="post-item-template" type="text/x-handlebars-template" src="templates/post/post-item.handlebars"></script>
 
         <!-- Project templates -->
-        <script id="project-list-template" type="text/x-handlebars-template">
-          <div class="resources-list project-detail-active">
-            <h1 class="text-uppercase">
-              Liste des projets
-            </h1>
-            <div id="projects" class="detail-content">
-              {{#if this}}
-                {{#each this}}
-                  <a onclick="displayProject('#detail', &quot;{{@id}}&quot;,  '#project-detail-template')">
-                    <div class="project-item">
-                      <h2>
-                        {{title}}
-                      </h2>
-                      <p>
-                        {{description}}
-                      </p>
-                    </div>
-                  </a>
-                {{/each}}
-              {{else}}
-                <h4>Aucun projet référencé</h4>
-              {{/if}}
-            </div>
-          </div>
-        </script>
+        <script id="project-list-template" type="text/x-handlebars-template" src="templates/project/project-list.handlebars"></script>
 
         <script>
           function getProjectsList() {
@@ -72,10 +48,7 @@
                       'description' : data.project_description.substring(0, 147) + '...'
                     };
                     projectsList.push(currentProject);
-
-                    var element = $('#project-list-template');
-                    template = Handlebars.compile(element.html());
-                    $('#detail').html(template(projectsList));
+                    displayTemplate('#project-list-template', '#detail', projectsList);
                   }
                 });
               });
