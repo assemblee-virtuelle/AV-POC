@@ -89,13 +89,56 @@ function displayResource(resourceIri) {
   }
 }
 
+function getKnownHostsList() {
+  var knownHostsList = [ config.resourceBaseUrl ];
+  if (typeof(Storage)) {
+    var hostList = localStorage.getItem('ldp_hostname_list');
+    if (hostList) {
+      hostList = JSON.parse(hostList);
+      if (hostList.host) {
+        knownHostsList = hostList.host
+      }
+    }
+  }
+
+  return knownHostsList;
+}
+
 function refreshCardFromHash() {
   var hash = window.location.hash;
-  console.log(hash);
   if (hash) {
-      displayResource(hash.substring(1, hash.length));
+    var url_array = hash.substring(1, hash.length).split('/ldp/');
+    if (url_array) {
+      var hostname = url_array[0];
+      if (hostname && typeof(Storage)) {
+        var hostList = localStorage.getItem('ldp_hostname_list');
+        if (hostList) {
+          hostList = JSON.parse(hostList);
+          console.log(hostList);
+          var exists = false;
+          if (hostList.host) {
+            hostList.host.forEach(function(host) {
+              if (host == hostname) {
+                exists = true;
+              }
+            });
+          }
+
+          if (!exists) {
+            hostList.host.push(hostname);
+          }
+        } else {
+          hostList = {};
+          hostList.host = [];
+          hostList.host.push(hostname);
+        }
+
+        localStorage.setItem('ldp_hostname_list', JSON.stringify(hostList));
+      }
+    }
+    displayResource(hash.substring(1, hash.length));
   } else {
-    var resourceId = config.resourceBaseUrl + 'project/assemblee-virtuelle/';
+    var resourceId = config.resourceBaseUrl + '/ldp/project/assemblee-virtuelle/';
     displayProject('#detail', resourceId, '#project-detail-template');
   }
 }

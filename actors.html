@@ -35,7 +35,7 @@
 
         <script>
           function getActorsList() {
-            var url = config.resourceBaseUrl + 'actor/';
+            var url = config.resourceBaseUrl + '/ldp/actor/';
             var actorsList = [];
             store.get(url).then(function(object) {
               $.each(object['ldp:contains'], function(index, actor) {
