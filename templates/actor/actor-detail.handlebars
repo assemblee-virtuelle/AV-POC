@@ -1,10 +1,14 @@
 <div class="actor-detail-active">
   <h1 class="text-center text-uppercase">{{object.foaf:firstName}} {{object.foaf:name}}</h1>
   <div class="detail-content">
-    <h2>Description</h2>
-    <p>{{object.description}}</p>
+    {{#if object.description }}
+    <div class="row">
+      <h2>Biographie</h2>
+      <p>{{object.description}}</p>
+    </div>
+    {{/if}}
 
-    <div class="row personal-information">
+    <div class="row">
       <h2>Informations personnelles</h2>
       <div class="col-md-3 equal profile-picture">
         <img height="200" width="200" src="{{object.profile_picture_url}}" alt="Photo de profil" />
@@ -30,7 +34,7 @@
 
     {{#if object.posts}}
       <div class="row" id="author-posts">
-        <h2>Ses posts de blog</h2>
+        <h2>Ses articles</h2>
 
         <div class="container">
           {{#each object.posts}}
