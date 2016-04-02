@@ -4,6 +4,11 @@ html, body, #main-container, #main-row {
   font-family: sans-serif;
 }
 
+a {
+  text-align: left;
+  text-decoration: none;
+}
+
 #content-wrapper {
   background-color: lightgrey;
   height: 100%;
@@ -79,4 +84,20 @@ a {
 #projects .project-item h2 {
   text-align: left;
 
+}
+
+/******************************************
+************* ACTORS LIST ***************
+*******************************************/
+#actors a {
+  text-align: left;
+  text-decoration: none;
+}
+
+#actors .project-item {
+
+}
+
+#actors .project-item h2 {
+  text-align: left;
 }

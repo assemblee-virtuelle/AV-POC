@@ -11,14 +11,12 @@
 
         <script type="text/javascript" src="library/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="library/LDP-framework/mystore.js"></script>
+        <script type="text/javascript" src="library/LDP-framework/node_modules/handlebars/dist/handlebars.js"></script>
         <script type="text/javascript" src="config/config.js"></script>
         <script type="text/javascript" src="library/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="http://mbostock.github.com/d3/d3.v2.js"></script>
         <script type="text/javascript" src="library/rdfviewer/rdf.js"></script>
         <script type="text/javascript" src="resources/js/av.js"></script>
-
-        <!-- Project templates -->
-        <script id="index-template" type="text/x-handlebars-template" src="templates/index.handlebars"></script>
 
         <!-- Project templates -->
         <script id="project-browser-template" type="text/x-handlebars-template" src="templates/project/project-browser.handlebars"></script>
@@ -30,30 +28,53 @@
         <script id="actor-detail-template" type="text/x-handlebars-template" src="templates/actor/actor-detail.handlebars"></script>
         <script id="actor-posts-template" type="text/x-handlebars-template" src="templates/actor/actor-posts.handlebars"></script>
         <script id="actor-item-template" type="text/x-handlebars-template" src="templates/actor/actor-item.handlebars"></script>
+        <script id="actor-list-template" type="text/x-handlebars-template" src="templates/actor/actor-list.handlebars"></script>
 
         <!-- Post templates -->
         <script id="post-item-template" type="text/x-handlebars-template" src="templates/post/post-item.handlebars"></script>
 
         <script>
-            $(function() {
-                window.store = new MyStore({
-                    container: config.containerUrl + 'actor/',
-                    context: config.contextUrl,
-                    template: '#actor-detail-template',
-                    partials: {
-                      'actorItem': '#actor-item-template',
-                      'actorDetail': '#actor-detail-template',
-                      'projectItem': '#project-item-template',
-                      'projectDetail': '#project-detail-template',
-                      'postItem': '#post-item-template'
-                    }
+          function getActorsList() {
+            var url = config.resourceBaseUrl + 'actor/';
+            var actorsList = [];
+            store.get(url).then(function(object) {
+              $.each(object['ldp:contains'], function(index, actor) {
+                store.get(actor).then(function(data) {
+                  var name = data['foaf:firstName'] + ' ' + data['foaf:name'];
+                  var description = data['av:biography'] ? (data['av:biography'].substring(0, 147) + '...') : null;
+                  var currentActor = {
+                    'id':        data['@id'],
+                    'name':      name,
+                    'biography': description
+                  };
+                  actorsList.push(currentActor);
+                  displayTemplate('#actor-list-template', '#detail', actorsList);
                 });
-                refreshCardFromHash();
+              });
+            });
+          }
+
+          $(function() {
+            window.store = new MyStore({
+              container: config.containerUrl + 'actor/',
+              context: config.contextUrl,
+              template: '#actor-detail-template',
+              partials: {
+                'actorItem': '#actor-item-template',
+                'actorDetail': '#actor-detail-template',
+                'projectItem': '#project-item-template',
+                'projectDetail': '#project-detail-template',
+                'postItem': '#post-item-template'
+              }
             });
 
-            $(window).on('hashchange', function() {
-              refreshCardFromHash();
-            });
+            getActorsList();
+            // refreshCardFromHash();
+          });
+
+          $(window).on('hashchange', function() {
+            refreshCardFromHash();
+          });
         </script>
     </head>
     <body>

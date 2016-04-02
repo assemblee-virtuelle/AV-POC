@@ -91,6 +91,7 @@ function displayResource(resourceIri) {
 
 function refreshCardFromHash() {
   var hash = window.location.hash;
+  console.log(hash);
   if (hash) {
       displayResource(hash.substring(1, hash.length));
   } else {
