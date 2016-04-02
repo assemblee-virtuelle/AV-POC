@@ -114,7 +114,6 @@ function refreshCardFromHash() {
         var hostList = localStorage.getItem('ldp_hostname_list');
         if (hostList) {
           hostList = JSON.parse(hostList);
-          console.log(hostList);
           var exists = false;
           if (hostList.host) {
             hostList.host.forEach(function(host) {
