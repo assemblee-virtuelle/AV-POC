@@ -41,19 +41,23 @@
             hostNameList.forEach(function (host) {
               var url = host + '/ldp/actor/';
               store.get(url).then(function(object) {
-                $.each(object['ldp:contains'], function(index, actor) {
-                  store.get(actor).then(function(data) {
-                    var name = data['foaf:firstName'] + ' ' + data['foaf:name'];
-                    var description = data['av:biography'] ? (data['av:biography'].substring(0, 147) + '...') : null;
-                    var currentActor = {
-                      'id':        data['@id'],
-                      'name':      name,
-                      'biography': description
-                    };
-                    actorsList.push(currentActor);
-                    displayTemplate('#actor-list-template', '#detail', actorsList);
+                if (object['ldp:contains']) {
+                  $.each(object['ldp:contains'], function(index, actor) {
+                    store.get(actor).then(function(data) {
+                      var name = data['foaf:firstName'] + ' ' + data['foaf:name'];
+                      var description = data['av:biography'] ? (data['av:biography'].substring(0, 147) + '...') : null;
+                      var currentActor = {
+                        'id':        data['@id'],
+                        'name':      name,
+                        'biography': description
+                      };
+                      actorsList.push(currentActor);
+                      displayTemplate('#actor-list-template', '#detail', actorsList);
+                    });
                   });
-                });
+                } else {
+                  displayTemplate('#actor-list-template', '#detail', undefined);
+                }
               });
             });
           }

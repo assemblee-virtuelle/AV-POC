@@ -42,19 +42,23 @@
             hostNameList.forEach(function (host) {
               var url = host + '/ldp/project/';
               store.get(url).then(function(object) {
-                $.each(object['ldp:contains'], function(index, project) {
-                  store.get(project).then(function(data) {
-                    if (data.project_title && data.project_description) {
-                      var currentProject = {
-                        '@id' : project,
-                        'title' : data.project_title,
-                        'description' : data.project_description.substring(0, 147) + '...'
-                      };
-                      projectsList.push(currentProject);
-                      displayTemplate('#project-list-template', '#detail', projectsList);
-                    }
+                if (object['ldp:contains']) {
+                  $.each(object['ldp:contains'], function(index, project) {
+                    store.get(project).then(function(data) {
+                      if (data.project_title && data.project_description) {
+                        var currentProject = {
+                          '@id' : project,
+                          'title' : data.project_title,
+                          'description' : data.project_description.substring(0, 147) + '...'
+                        };
+                        projectsList.push(currentProject);
+                        displayTemplate('#project-list-template', '#detail', projectsList);
+                      }
+                    });
                   });
-                });
+                } else {
+                  displayTemplate('#project-list-template', '#detail', undefined);
+                }
               });
             });
           }
