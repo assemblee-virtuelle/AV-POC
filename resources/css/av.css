@@ -63,3 +63,20 @@ a {
   list-style: outside none none;
   padding-left: 0;
 }
+
+/******************************************
+************* PROJECTS LIST ***************
+*******************************************/
+#projects a {
+  text-align: left;
+  text-decoration: none;
+}
+
+#projects .project-item {
+
+}
+
+#projects .project-item h2 {
+  text-align: left;
+
+}
