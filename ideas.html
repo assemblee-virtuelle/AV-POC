@@ -10,7 +10,7 @@
         <link href="library/rdfviewer/rdfviewer.css" type="text/css" rel="stylesheet" />
 
         <script type="text/javascript" src="library/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="library/LDP-framework/mystore.js"></script>
+        <script type="text/javascript" src="library/LDP-framework/ldpframework.js"></script>
         <script type="text/javascript" src="library/handlebars/handlebars.js"></script>
         <script type="text/javascript" src="config/config.js"></script>
         <script type="text/javascript" src="library/bootstrap/js/bootstrap.min.js"></script>
@@ -46,7 +46,6 @@
                 if (object['ldp:contains']) {
                   $.each(object['ldp:contains'], function(index, idea) {
                     store.get(idea).then(function(data) {
-                      console.log(data);
                       var currentIdea = {
                         'id':        data['@id'],
                         'title':      data.title

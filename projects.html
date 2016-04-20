@@ -10,7 +10,7 @@
         <link href="resources/css/av.css" type="text/css" rel="stylesheet" />
 
         <script type="text/javascript" src="library/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="library/LDP-framework/mystore.js"></script>
+        <script type="text/javascript" src="library/LDP-framework/ldpframework.js"></script>
         <script type="text/javascript" src="library/handlebars/handlebars.js"></script>
         <script type="text/javascript" src="config/config.js"></script>
         <script type="text/javascript" src="library/bootstrap/js/bootstrap.min.js"></script>
@@ -47,7 +47,7 @@
                     store.get(project).then(function(data) {
                       if (data.project_title && data.project_description) {
                         var currentProject = {
-                          '@id' : project,
+                          'id' : data['@id'],
                           'title' : data.project_title,
                           'description' : data.project_description.substring(0, 147) + '...'
                         };
